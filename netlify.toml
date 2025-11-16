@@ -1,0 +1,51 @@
+[build]
+  # No build command needed for static site
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Redirect HTTP to HTTPS (Netlify does this automatically, but explicit is good)
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Headers for static assets (cache for 1 year)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers for images (cache for 1 month)
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.jpeg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
