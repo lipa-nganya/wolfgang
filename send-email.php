@@ -4,15 +4,14 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// SMTP Configuration - Update with your LiquorOS (dial a drink) SMTP settings
-// Replace these values with your actual SMTP credentials
-$smtp_host = 'smtp.gmail.com'; // e.g., smtp.gmail.com, smtp.mailtrap.io, or your custom SMTP
-$smtp_port = 587; // Usually 587 for TLS or 465 for SSL
-$smtp_username = 'your-email@gmail.com'; // Your SMTP username/email
-$smtp_password = 'your-app-password'; // Your SMTP password or App Password
-$smtp_from_email = 'your-email@gmail.com'; // Sender email address
+// SMTP Configuration - Using settings from Dialadrink (LiquorOS) project
+$smtp_host = 'smtp.gmail.com';
+$smtp_port = 587;
+$smtp_username = 'wolf79234@gmail.com';
+$smtp_password = 'wnwddpaiqwlfmoww';
+$smtp_from_email = 'wolf79234@gmail.com';
 $smtp_from_name = 'Wolfgang Contact Form';
-$smtp_encryption = 'tls'; // 'tls' or 'ssl'
+$smtp_encryption = 'tls'; // TLS for port 587
 
 // Recipient email
 $to_email = 'wolf79234@gmail.com';

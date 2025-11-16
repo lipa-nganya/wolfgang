@@ -203,10 +203,19 @@ if (contactForm) {
         formDataToSend.append('message', message);
         formDataToSend.append('recaptcha', recaptchaResponse);
         
-        // Send email using PHP backend with SMTP
-        fetch('send-email.php', {
+        // Send email using Netlify serverless function
+        fetch('/.netlify/functions/send-email', {
             method: 'POST',
-            body: formDataToSend
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                company: company,
+                topic: topicLabel,
+                message: message,
+                recaptcha: recaptchaResponse
+            })
         })
         .then(response => response.json())
         .then(data => {

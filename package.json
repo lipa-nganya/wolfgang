@@ -1,0 +1,13 @@
+{
+  "name": "wolfgang",
+  "version": "1.0.0",
+  "description": "Wolfgang website",
+  "scripts": {
+    "build": "echo 'No build step required for static site'"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {}
+}
+
