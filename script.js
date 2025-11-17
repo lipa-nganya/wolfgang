@@ -224,14 +224,14 @@ if (contactForm) {
                 contactForm.reset();
                 grecaptcha.reset();
             } else {
-                alert('Sorry, there was an error sending your message: ' + (data.error || 'Unknown error') + '. Please try again or contact us directly at sales@wolfgang.tech');
+                alert('Sorry, there was an error sending your message: ' + (data.error || 'Unknown error') + '. Please try again or contact us directly at sales@thewolfgang.tech');
             }
             submitButton.disabled = false;
             submitButton.textContent = originalButtonText;
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Sorry, there was an error sending your message. Please try again or contact us directly at sales@wolfgang.tech');
+            alert('Sorry, there was an error sending your message. Please try again or contact us directly at sales@thewolfgang.tech');
             submitButton.disabled = false;
             submitButton.textContent = originalButtonText;
         });

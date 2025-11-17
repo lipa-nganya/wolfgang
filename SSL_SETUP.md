@@ -132,3 +132,5 @@ For most websites, **DV certificates from Let's Encrypt** (free) are sufficient.
 - **Let's Encrypt**: https://letsencrypt.org/docs/
 - **Certbot**: https://certbot.eff.org/
 
+
+

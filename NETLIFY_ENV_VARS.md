@@ -48,3 +48,5 @@ TO_EMAIL=wolf79234@gmail.com
 - Make sure to deploy after adding the environment variables
 - The function will be available at `/.netlify/functions/send-email`
 
+
+

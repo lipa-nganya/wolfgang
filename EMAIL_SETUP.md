@@ -56,3 +56,5 @@ After configuring, test the contact form:
 - Consider using environment variables for sensitive credentials
 - Enable reCAPTCHA verification on the server side (currently commented out)
 
+
+
