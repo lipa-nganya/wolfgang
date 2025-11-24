@@ -172,26 +172,16 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Check if reCAPTCHA is completed
-        // Allow form submission on localhost even if reCAPTCHA fails (for testing)
-        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        // reCAPTCHA is optional - form can submit without it
         let recaptchaResponse = '';
         
         try {
             if (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse) {
                 recaptchaResponse = grecaptcha.getResponse();
-                if (!recaptchaResponse && !isLocalhost) {
-                    alert('Please complete the reCAPTCHA verification.');
-                    return;
-                }
             }
         } catch (error) {
-            console.warn('reCAPTCHA error:', error);
-            // Allow form submission on localhost even if reCAPTCHA fails
-            if (!isLocalhost) {
-                alert('Please complete the reCAPTCHA verification.');
-                return;
-            }
+            console.warn('reCAPTCHA error (continuing without it):', error);
+            // Continue without reCAPTCHA if there's an error
         }
         
         // Get form values
