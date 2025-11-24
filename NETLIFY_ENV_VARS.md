@@ -27,7 +27,7 @@ Add these environment variables in your Netlify dashboard:
 
 | Key | Value | Description |
 |-----|-------|-------------|
-| `RECAPTCHA_SECRET_KEY` | `your-recaptcha-secret` | For server-side reCAPTCHA verification (optional) |
+| `RECAPTCHA_SECRET_KEY` | `6LcmJxcsAAAAAGRPhGC86o8zAdcSRkAXyG5OiRi_` | For server-side reCAPTCHA verification |
 
 ## Quick Copy-Paste:
 
@@ -39,6 +39,7 @@ SMTP_PASS=wnwddpaiqwlfmoww
 SMTP_FROM=wolf79234@gmail.com
 SMTP_FROM_NAME=Wolfgang Contact Form
 TO_EMAIL=wolf79234@gmail.com
+RECAPTCHA_SECRET_KEY=6LcmJxcsAAAAAGRPhGC86o8zAdcSRkAXyG5OiRi_
 ```
 
 ## Notes:

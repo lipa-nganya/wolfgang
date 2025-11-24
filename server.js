@@ -1,25 +1,23 @@
+const express = require('express');
+const path = require('path');
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
-exports.handler = async (event, context) => {
-  // Only allow POST requests
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' })
-    };
-  }
+const app = express();
+const PORT = process.env.PORT || 3000;
 
+// Middleware
+app.use(express.json());
+app.use(express.static(path.join(__dirname)));
+
+// Email endpoint (matching Netlify function path)
+app.post('/.netlify/functions/send-email', async (req, res) => {
   try {
-    // Parse form data
-    const formData = JSON.parse(event.body);
-    const { name, company, topic, message, recaptcha } = formData;
+    const { name, company, topic, message, recaptcha } = req.body;
 
     // Validate required fields
     if (!name || !company || !topic || !message) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'All fields are required' })
-      };
+      return res.status(400).json({ error: 'All fields are required' });
     }
 
     // Verify reCAPTCHA
@@ -31,10 +29,7 @@ exports.handler = async (event, context) => {
         );
         const recaptchaResult = await recaptchaVerify.json();
         if (!recaptchaResult.success) {
-          return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'reCAPTCHA verification failed' })
-          };
+          return res.status(400).json({ error: 'reCAPTCHA verification failed' });
         }
       } catch (error) {
         console.error('reCAPTCHA verification error:', error);
@@ -53,17 +48,14 @@ exports.handler = async (event, context) => {
     // Validate SMTP configuration
     if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
       console.error('SMTP configuration missing');
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Email service not configured' })
-      };
+      return res.status(500).json({ error: 'Email service not configured' });
     }
 
     // Create transporter
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
-      secure: smtpPort === 465, // true for 465, false for other ports
+      secure: smtpPort === 465,
       auth: {
         user: smtpUser,
         pass: smtpPass
@@ -127,26 +119,29 @@ exports.handler = async (event, context) => {
 
     console.log('Email sent successfully:', info.messageId);
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ 
-        success: true, 
-        message: 'Email sent successfully',
-        messageId: info.messageId
-      })
-    };
+    return res.status(200).json({
+      success: true,
+      message: 'Email sent successfully',
+      messageId: info.messageId
+    });
 
   } catch (error) {
     console.error('Error sending email:', error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ 
-        error: 'Failed to send email',
-        details: error.message 
-      })
-    };
+    return res.status(500).json({
+      error: 'Failed to send email',
+      details: error.message
+    });
   }
-};
+});
 
+// Serve index.html for root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 Wolfgang server running at http://localhost:${PORT}`);
+  console.log(`📧 Email endpoint: http://localhost:${PORT}/.netlify/functions/send-email`);
+});
 

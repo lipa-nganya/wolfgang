@@ -529,7 +529,15 @@ section {
 .cta-headline {
     font-size: 2.5rem;
     font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.cta-subheadline {
+    font-size: 1.25rem;
+    color: var(--bg-white);
     margin-bottom: 2rem;
+    font-weight: 400;
     letter-spacing: -0.5px;
 }
 
@@ -750,6 +758,32 @@ section {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--primary-blue);
+}
+
+.price-main {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.price-period {
+    font-size: 1rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.price-discount {
+    font-size: 0.9rem;
+    color: var(--success-green);
+    font-weight: 600;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(16, 185, 129, 0.1);
+    border-radius: 6px;
+    display: inline-block;
 }
 
 .price-amount {

@@ -173,10 +173,25 @@ if (contactForm) {
         e.preventDefault();
         
         // Check if reCAPTCHA is completed
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (!recaptchaResponse) {
-            alert('Please complete the reCAPTCHA verification.');
-            return;
+        // Allow form submission on localhost even if reCAPTCHA fails (for testing)
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        let recaptchaResponse = '';
+        
+        try {
+            if (typeof grecaptcha !== 'undefined' && grecaptcha.getResponse) {
+                recaptchaResponse = grecaptcha.getResponse();
+                if (!recaptchaResponse && !isLocalhost) {
+                    alert('Please complete the reCAPTCHA verification.');
+                    return;
+                }
+            }
+        } catch (error) {
+            console.warn('reCAPTCHA error:', error);
+            // Allow form submission on localhost even if reCAPTCHA fails
+            if (!isLocalhost) {
+                alert('Please complete the reCAPTCHA verification.');
+                return;
+            }
         }
         
         // Get form values
@@ -222,7 +237,9 @@ if (contactForm) {
             if (data.success) {
                 alert('Thank you for your message! We\'ll get back to you as soon as possible.');
                 contactForm.reset();
-                grecaptcha.reset();
+                if (typeof grecaptcha !== 'undefined' && grecaptcha.reset) {
+                    grecaptcha.reset();
+                }
             } else {
                 alert('Sorry, there was an error sending your message: ' + (data.error || 'Unknown error') + '. Please try again or contact us directly at sales@thewolfgang.tech');
             }
@@ -242,5 +259,53 @@ if (contactForm) {
 const currentYearElement = document.getElementById('current-year');
 if (currentYearElement) {
     currentYearElement.textContent = new Date().getFullYear();
+}
+
+// reCAPTCHA load callback
+window.onRecaptchaLoad = function() {
+    console.log('reCAPTCHA loaded');
+    // Verify site key is present
+    const recaptchaElement = document.querySelector('.g-recaptcha');
+    if (recaptchaElement) {
+        const siteKey = recaptchaElement.getAttribute('data-sitekey');
+        console.log('Site key:', siteKey);
+        if (!siteKey || siteKey === 'YOUR_SITE_KEY') {
+            console.error('Invalid or missing site key');
+        }
+    }
+};
+
+// Hide reCAPTCHA on localhost
+document.addEventListener('DOMContentLoaded', function() {
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                        window.location.hostname === '127.0.0.1' ||
+                        window.location.hostname === '';
+    const recaptchaContainer = document.getElementById('recaptcha-container');
+    if (recaptchaContainer && isLocalhost) {
+        recaptchaContainer.style.display = 'none';
+    }
+});
+
+// Prefill contact form based on URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const plan = urlParams.get('plan');
+if (plan && document.getElementById('topic')) {
+    const topicSelect = document.getElementById('topic');
+    // Map URL parameter to option value
+    const planMap = {
+        'pay-per-order': 'pay-per-order',
+        'pro-rollout': 'pro-rollout'
+    };
+    const optionValue = planMap[plan];
+    if (optionValue) {
+        topicSelect.value = optionValue;
+        // Scroll to form after a short delay to ensure page is loaded
+        setTimeout(() => {
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 100);
+    }
 }
 
