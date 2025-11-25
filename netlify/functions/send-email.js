@@ -59,7 +59,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Create transporter
+    // Create transporter with Dial a Drink SMTP settings
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
@@ -67,8 +67,27 @@ exports.handler = async (event, context) => {
       auth: {
         user: smtpUser,
         pass: smtpPass
+      },
+      tls: {
+        // Do not fail on invalid certs
+        rejectUnauthorized: false
       }
     });
+
+    // Verify transporter connection
+    try {
+      await transporter.verify();
+      console.log('SMTP server connection verified');
+    } catch (error) {
+      console.error('SMTP connection verification failed:', error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: 'SMTP server connection failed',
+          details: error.message
+        })
+      };
+    }
 
     // Email subject
     const subject = `New Contact Form Submission - ${topic}`;
@@ -126,6 +145,12 @@ exports.handler = async (event, context) => {
     });
 
     console.log('Email sent successfully:', info.messageId);
+    console.log('Email details:', {
+      from: smtpFrom,
+      to: toEmail,
+      subject: subject,
+      messageId: info.messageId
+    });
 
     return {
       statusCode: 200,
@@ -138,11 +163,18 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Error sending email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response
+    });
     return {
       statusCode: 500,
       body: JSON.stringify({ 
         error: 'Failed to send email',
-        details: error.message 
+        details: error.message,
+        code: error.code
       })
     };
   }

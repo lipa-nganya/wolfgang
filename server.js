@@ -37,30 +37,48 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
       }
     }
 
-    // Get SMTP settings from environment variables
-    const smtpHost = process.env.SMTP_HOST;
+    // Get SMTP settings from environment variables (with Dial a Drink defaults)
+    const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
     const smtpPort = parseInt(process.env.SMTP_PORT || '587');
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+    const smtpUser = process.env.SMTP_USER || 'wolf79234@gmail.com';
+    const smtpPass = process.env.SMTP_PASS || 'wnwddpaiqwlfmoww';
     const smtpFrom = process.env.SMTP_FROM || smtpUser;
     const toEmail = process.env.TO_EMAIL || 'wolf79234@gmail.com';
 
-    // Validate SMTP configuration
-    if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
-      console.error('SMTP configuration missing');
-      return res.status(500).json({ error: 'Email service not configured' });
-    }
+    console.log('SMTP Configuration:', {
+      host: smtpHost,
+      port: smtpPort,
+      user: smtpUser,
+      from: smtpFrom,
+      to: toEmail
+    });
 
-    // Create transporter
+    // Create transporter with Dial a Drink SMTP settings
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
-      secure: smtpPort === 465,
+      secure: smtpPort === 465, // true for 465, false for other ports
       auth: {
         user: smtpUser,
         pass: smtpPass
+      },
+      tls: {
+        // Do not fail on invalid certs
+        rejectUnauthorized: false
       }
     });
+
+    // Verify transporter connection
+    try {
+      await transporter.verify();
+      console.log('SMTP server connection verified');
+    } catch (error) {
+      console.error('SMTP connection verification failed:', error);
+      return res.status(500).json({
+        error: 'SMTP server connection failed',
+        details: error.message
+      });
+    }
 
     // Email subject
     const subject = `New Contact Form Submission - ${topic}`;
@@ -118,6 +136,12 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
     });
 
     console.log('Email sent successfully:', info.messageId);
+    console.log('Email details:', {
+      from: smtpFrom,
+      to: toEmail,
+      subject: subject,
+      messageId: info.messageId
+    });
 
     return res.status(200).json({
       success: true,
@@ -127,9 +151,16 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
 
   } catch (error) {
     console.error('Error sending email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response
+    });
     return res.status(500).json({
       error: 'Failed to send email',
-      details: error.message
+      details: error.message,
+      code: error.code
     });
   }
 });
