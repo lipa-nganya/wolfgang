@@ -557,9 +557,23 @@ section {
 .product-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    column-gap: 4rem;
+    row-gap: 0;
+    align-items: start;
     margin-bottom: 6rem;
+}
+
+.product-card > .product-header {
+    grid-column: 1 / -1;
+}
+
+.product-card > .product-description {
+    grid-column: 1 / -1;
+    max-width: none;
+}
+
+.product-card > .product-features {
+    margin-top: 0;
 }
 
 .product-card.reverse {
@@ -619,7 +633,28 @@ section {
     display: list-item;
 }
 
+.features-list li strong {
+    display: block;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+}
+
 .features-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Key Features: two rows (3×2) on Our Work product card */
+.product-features .features-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1.75rem;
+    row-gap: 1.5rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.product-features .features-list li {
     margin-bottom: 0;
 }
 
@@ -917,10 +952,20 @@ section {
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3rem 4rem;
     margin-bottom: 0.75rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-section {
+    text-align: center;
+    min-width: 200px;
 }
 
 .footer-title {
@@ -948,6 +993,7 @@ section {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    align-items: center;
 }
 
 .footer-links li {
@@ -992,9 +1038,19 @@ section {
     .product-card.reverse {
         direction: ltr;
     }
+
+    .product-features .features-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     
     .pricing-card.featured {
         transform: scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .product-features .features-list {
+        grid-template-columns: 1fr;
     }
 }
 

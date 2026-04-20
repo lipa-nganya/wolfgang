@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developers Portal - DeliveryOS Valkyrie API | Wolfgang</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=League+Spartan:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .developers-hero {
+            padding: var(--section-padding);
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-white) 100%);
+        }
+        .developers-hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .developers-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .developers-hero p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        .developers-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .features-grid-developers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .feature-card-developers {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card-developers:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .feature-icon-developers {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: rgba(162, 44, 41, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+        }
+        .feature-card-developers h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .feature-card-developers p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        .use-cases-section {
+            padding: var(--section-padding);
+            background: var(--bg-light);
+        }
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .use-case-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-blue);
+        }
+        .use-case-card h3 {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .use-case-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .developers-hero h1 {
+                font-size: 2rem;
+            }
+            .developers-hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none;">
+                        <span class="logo-text">Wolfgang</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="products.html" class="nav-link">Our Work</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Developers Hero Section -->
+    <section class="developers-hero">
+        <div class="container">
+            <div class="developers-hero-content">
+                <h1>DeliveryOS Valkyrie API</h1>
+                <p>Programmatically create orders, manage drivers, and track deliveries with our powerful API. Start building with our free sandbox environment.</p>
+                <div class="developers-cta">
+                    <a href="developers-sandbox.html" class="btn btn-primary">Get Sandbox API Key</a>
+                    <a href="developers-docs.html" class="btn btn-outline">View Documentation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-headline">Why Developers Choose Valkyrie</h2>
+            <div class="features-grid-developers">
+                <div class="feature-card-developers">
+                    <div class="feature-icon-developers">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 3H6C4.89543 3 4 3.89543 4 5V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V5C20 3.89543 19.1046 3 18 3H16M8 3C8 4.10457 8.89543 5 10 5H14C15.1046 5 16 4.10457 16 3M8 3C8 1.89543 8.89543 1 10 1H14C15.1046 1 16 1.89543 16 3M12 9H16M12 13H16M8 9H8.01M8 13H8.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>RESTful API</h3>
+                    <p>Simple, intuitive REST API for creating orders, managing drivers, and tracking deliveries.</p>
+                </div>
+                <div class="feature-card-developers">
+                    <div class="feature-icon-developers">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Secure Authentication</h3>
+                    <p>API key-based authentication with sandbox and production environments.</p>
+                </div>
+                <div class="feature-card-developers">
+                    <div class="feature-icon-developers">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Real-time Updates</h3>
+                    <p>Webhooks and real-time order status updates for seamless integration.</p>
+                </div>
+                <div class="feature-card-developers">
+                    <div class="feature-icon-developers">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 16V8C20.9996 7.64928 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64928 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.27002 6.96L12 12.01L20.73 6.96" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 22.08V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Easy Integration</h3>
+                    <p>Comprehensive documentation and sandbox environment for testing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases-section">
+        <div class="container">
+            <h2 class="section-headline">Use Cases</h2>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <h3>E-commerce Platforms</h3>
+                    <p>Integrate delivery capabilities into your online store. Create orders automatically when customers checkout.</p>
+                </div>
+                <div class="use-case-card">
+                    <h3>Restaurant Management</h3>
+                    <p>Connect your POS system to DeliveryOS. Manage orders and track deliveries in real-time.</p>
+                </div>
+                <div class="use-case-card">
+                    <h3>Logistics Platforms</h3>
+                    <p>Build custom delivery solutions. Access driver network and delivery infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-headline">Ready to Get Started?</h2>
+            <a href="developers-sandbox.html" class="btn btn-primary btn-large" style="color: white;">Get Sandbox API Key</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-heading">Our Work</h4>
+                    <ul class="footer-links">
+                        <li><a href="products.html#dial-a-drink-kenya">Dial a Drink Kenya</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>Email: sales@thewolfgang.tech</li>
+                        <li>Phone: +254712674333</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Wolfgang. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

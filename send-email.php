@@ -25,12 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Get form data
 $name = isset($_POST['name']) ? trim($_POST['name']) : '';
 $company = isset($_POST['company']) ? trim($_POST['company']) : '';
-$topic = isset($_POST['topic']) ? trim($_POST['topic']) : '';
 $message = isset($_POST['message']) ? trim($_POST['message']) : '';
 $recaptcha = isset($_POST['recaptcha']) ? trim($_POST['recaptcha']) : '';
 
 // Validate required fields
-if (empty($name) || empty($company) || empty($topic) || empty($message)) {
+if (empty($name) || empty($company) || empty($message)) {
     http_response_code(400);
     echo json_encode(['error' => 'All fields are required']);
     exit;
@@ -47,7 +46,7 @@ if (empty($name) || empty($company) || empty($topic) || empty($message)) {
 // }
 
 // Email subject
-$subject = "New Contact Form Submission - " . $topic;
+$subject = "New Contact Form Submission";
 
 // Email body (HTML format)
 $email_body_html = "
@@ -76,9 +75,6 @@ $email_body_html = "
                 <span class='label'>Company:</span> {$company}
             </div>
             <div class='field'>
-                <span class='label'>Topic:</span> {$topic}
-            </div>
-            <div class='field'>
                 <span class='label'>Message:</span>
                 <div class='message-box'>" . nl2br(htmlspecialchars($message)) . "</div>
             </div>
@@ -92,7 +88,6 @@ $email_body_html = "
 $email_body_text = "New contact form submission from Wolfgang website:\n\n";
 $email_body_text .= "Name: " . $name . "\n";
 $email_body_text .= "Company: " . $company . "\n";
-$email_body_text .= "Topic: " . $topic . "\n";
 $email_body_text .= "Message:\n" . $message . "\n";
 
 // Use PHPMailer if available, otherwise use basic mail() function

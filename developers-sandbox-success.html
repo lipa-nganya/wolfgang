@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox Account Created - Developers Portal | Wolfgang</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=League+Spartan:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .success-section {
+            padding: var(--section-padding);
+            background: var(--bg-light);
+            min-height: calc(100vh - 200px);
+        }
+        .success-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        .success-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success-green);
+        }
+        .api-key-display {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            margin-bottom: 1rem;
+            border: 2px solid var(--border-color);
+        }
+        .copy-btn {
+            padding: 0.5rem 1rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .copy-btn:hover {
+            background: #902923;
+        }
+        .alert-warning {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #FCD34D;
+        }
+        .code-block {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .info-box {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+        }
+        .toast-notification.show {
+            display: flex;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none;">
+                        <span class="logo-text">Wolfgang</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="products.html" class="nav-link">Our Work</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Success Section -->
+    <section class="success-section">
+        <div class="container">
+            <div class="success-container">
+                <div class="success-header">
+                    <div class="success-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h2 class="page-headline" style="font-size: 2rem; margin-bottom: 0.5rem;">Sandbox Account Created!</h2>
+                    <p>Your sandbox API key is ready to use. Store it securely.</p>
+                </div>
+
+                <div class="alert-warning">
+                    <strong>Important:</strong> This is the only time your full API key will be displayed. Store it securely. You can regenerate it from the Partner Console.
+                </div>
+
+                <div id="sandbox-data">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-dark);">Your Sandbox API Key</h3>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem;">
+                        <div class="api-key-display" id="api-key-display"></div>
+                        <button class="copy-btn" onclick="copyApiKey()">Copy</button>
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem; color: var(--text-dark);">Sandbox API Base URL</h3>
+                    <div class="api-key-display" id="api-base-url"></div>
+
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--text-dark);">Example API Request</h3>
+                    <div class="code-block" id="example-request"></div>
+
+                    <div class="action-buttons">
+                        <a href="developers-docs.html" class="btn btn-primary">View Documentation</a>
+                        <a href="index.html" class="btn btn-outline">Back to Home</a>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Account Details:</strong>
+                        <p style="margin-top: 0.5rem; color: var(--text-gray);" id="account-details"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-heading">Our Work</h4>
+                    <ul class="footer-links">
+                        <li><a href="products.html#dial-a-drink-kenya">Dial a Drink Kenya</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>Email: sales@thewolfgang.tech</li>
+                        <li>Phone: +254712674333</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Wolfgang. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const sandboxData = JSON.parse(sessionStorage.getItem('sandboxSignupData') || 'null');
+        
+        if (!sandboxData) {
+            window.location.href = 'developers-sandbox.html';
+        } else {
+            document.getElementById('api-key-display').textContent = sandboxData.apiKey;
+            document.getElementById('api-base-url').textContent = sandboxData.apiBaseUrl;
+            
+            const exampleRequest = `curl -X POST ${sandboxData.apiBaseUrl}/orders \\
+  -H "Authorization: Bearer ${sandboxData.apiKey}" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "customerName": "John Doe",
+    "customerPhone": "+254700000000",
+    "deliveryAddress": "123 Test Street, Nairobi",
+    "items": [
+      {
+        "name": "Test Item",
+        "quantity": 1,
+        "price": 100
+      }
+    ]
+  }'`;
+            
+            document.getElementById('example-request').textContent = exampleRequest;
+            
+            const expiresDate = new Date(sandboxData.expiresAt).toLocaleDateString();
+            document.getElementById('account-details').innerHTML = `
+                Email: ${sandboxData.email}<br>
+                Expires: ${expiresDate}
+            `;
+        }
+        
+        function copyApiKey() {
+            const apiKey = sandboxData.apiKey;
+            navigator.clipboard.writeText(apiKey).then(() => {
+                // Show toast notification
+                showToast('API key copied to clipboard!');
+                
+                // Update button text
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                showToast('Failed to copy. Please try again.', true);
+            });
+        }
+        
+        function showToast(message, isError = false) {
+            // Remove existing toast if any
+            const existingToast = document.getElementById('toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+            
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.id = 'toast-notification';
+            toast.className = 'toast-notification';
+            if (isError) {
+                toast.style.background = '#dc3545';
+            }
+            toast.innerHTML = `
+                <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    ${isError 
+                        ? '<path d="M6 18L18 6M6 6l12 12"/>'
+                        : '<path d="M20 6L9 17l-5-5"/>'
+                    }
+                </svg>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+

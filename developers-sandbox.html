@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Sandbox API Key - Developers Portal | Wolfgang</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=League+Spartan:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .form-section {
+            padding: var(--section-padding);
+            background: var(--bg-light);
+            min-height: calc(100vh - 200px);
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .alert-error {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FCA5A5;
+        }
+        .info-box {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .info-box ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+        .info-box li {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none;">
+                        <span class="logo-text">Wolfgang</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="products.html" class="nav-link">Our Work</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <div class="container">
+            <a href="index.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+            </a>
+            
+            <div class="form-container">
+                <h2 class="page-headline" style="font-size: 2rem; margin-bottom: 0.5rem;">Get Your Sandbox API Key</h2>
+                <p class="page-subheadline" style="margin-bottom: 2rem;">Create a free sandbox account to test the DeliveryOS Valkyrie API. No credit card required.</p>
+
+                <div id="error-alert" class="alert alert-error" style="display: none;"></div>
+
+                <form id="sandbox-form">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="developer@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="companyName">Company Name (Optional)</label>
+                        <input type="text" id="companyName" name="companyName" placeholder="Acme Inc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="useCase">Use Case (Optional)</label>
+                        <textarea id="useCase" name="useCase" placeholder="Describe how you plan to use the API..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+                        Create Sandbox Account
+                    </button>
+                </form>
+
+                <div class="info-box">
+                    <strong>What you'll get:</strong>
+                    <ul>
+                        <li>Sandbox API key (valid for 90 days)</li>
+                        <li>Access to mock drivers and test data</li>
+                        <li>Full API documentation</li>
+                        <li>Rate-limited sandbox environment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-heading">Our Work</h4>
+                    <ul class="footer-links">
+                        <li><a href="products.html#dial-a-drink-kenya">Dial a Drink Kenya</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>Email: sales@thewolfgang.tech</li>
+                        <li>Phone: +254712674333</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Wolfgang. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get API base URL based on environment
+        const hostname = window.location.hostname;
+        const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '';
+        const API_BASE_URL = isLocal 
+            ? 'http://localhost:5001/api'
+            : 'https://dialadrink-backend-910510650031.us-central1.run.app/api';
+        
+        document.getElementById('sandbox-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const errorAlert = document.getElementById('error-alert');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
+            errorAlert.style.display = 'none';
+            
+            const formData = {
+                email: document.getElementById('email').value,
+                companyName: document.getElementById('companyName').value,
+                useCase: document.getElementById('useCase').value
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/developers/sandbox/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    sessionStorage.setItem('sandboxSignupData', JSON.stringify({
+                        apiKey: data.sandboxPartner.apiKey,
+                        email: data.sandboxPartner.email,
+                        apiBaseUrl: data.apiBaseUrl,
+                        expiresAt: data.sandboxPartner.expiresAt
+                    }));
+                    window.location.href = 'developers-sandbox-success.html';
+                } else {
+                    errorAlert.textContent = data.message || 'Failed to create sandbox account. Please try again.';
+                    errorAlert.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorAlert.textContent = 'Failed to create sandbox account. Please try again.';
+                errorAlert.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

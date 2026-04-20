@@ -80,7 +80,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe elements for animation
-document.querySelectorAll('.solution-card, .feature-item, .product-card, .pricing-card').forEach(el => {
+document.querySelectorAll('.solution-card, .feature-item, .product-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -187,12 +187,7 @@ if (contactForm) {
         // Get form values
         const name = document.getElementById('name').value;
         const company = document.getElementById('company').value;
-        const topic = document.getElementById('topic').value;
         const message = document.getElementById('message').value;
-        
-        // Get topic label
-        const topicSelect = document.getElementById('topic');
-        const topicLabel = topicSelect.options[topicSelect.selectedIndex].text;
         
         // Show loading state
         const submitButton = contactForm.querySelector('button[type="submit"]');
@@ -204,7 +199,6 @@ if (contactForm) {
         const formDataToSend = new FormData();
         formDataToSend.append('name', name);
         formDataToSend.append('company', company);
-        formDataToSend.append('topic', topicLabel);
         formDataToSend.append('message', message);
         formDataToSend.append('recaptcha', recaptchaResponse);
         
@@ -217,7 +211,6 @@ if (contactForm) {
             body: JSON.stringify({
                 name: name,
                 company: company,
-                topic: topicLabel,
                 message: message,
                 recaptcha: recaptchaResponse
             })
@@ -275,27 +268,3 @@ document.addEventListener('DOMContentLoaded', function() {
         recaptchaContainer.style.display = 'none';
     }
 });
-
-// Prefill contact form based on URL parameters
-const urlParams = new URLSearchParams(window.location.search);
-const plan = urlParams.get('plan');
-if (plan && document.getElementById('topic')) {
-    const topicSelect = document.getElementById('topic');
-    // Map URL parameter to option value
-    const planMap = {
-        'pay-per-order': 'pay-per-order',
-        'pro-rollout': 'pro-rollout'
-    };
-    const optionValue = planMap[plan];
-    if (optionValue) {
-        topicSelect.value = optionValue;
-        // Scroll to form after a short delay to ensure page is loaded
-        setTimeout(() => {
-            const form = document.getElementById('contactForm');
-            if (form) {
-                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 100);
-    }
-}
-

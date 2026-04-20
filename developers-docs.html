@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Developers Portal | Wolfgang</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=League+Spartan:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .docs-section {
+            padding: var(--section-padding);
+            background: var(--bg-light);
+            min-height: calc(100vh - 200px);
+        }
+        .docs-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        .docs-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .docs-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+            font-family: var(--font-heading);
+        }
+        .docs-tab.active {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
+        }
+        .docs-tab:hover {
+            color: var(--primary-blue);
+        }
+        .docs-content {
+            display: none;
+        }
+        .docs-content.active {
+            display: block;
+        }
+        .code-block {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+        }
+        .docs-content h3 {
+            color: var(--text-dark);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .docs-content p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .info-box {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none;">
+                        <span class="logo-text">Wolfgang</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="products.html" class="nav-link">Our Work</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Section -->
+    <section class="docs-section">
+        <div class="container">
+            <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-gray); text-decoration: none; margin-bottom: 2rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+            </a>
+            
+            <div class="docs-container">
+                <h2 class="page-headline" style="font-size: 2rem; margin-bottom: 2rem;">API Documentation</h2>
+                
+                <div class="docs-tabs">
+                    <button class="docs-tab active" onclick="showTab('overview')">Overview</button>
+                    <button class="docs-tab" onclick="showTab('auth')">Authentication</button>
+                    <button class="docs-tab" onclick="showTab('orders')">Orders</button>
+                    <button class="docs-tab" onclick="showTab('riders')">Riders</button>
+                    <button class="docs-tab" onclick="showTab('errors')">Errors</button>
+                </div>
+
+                <div id="overview" class="docs-content active">
+                    <h3>DeliveryOS Valkyrie API</h3>
+                    <p>The DeliveryOS Valkyrie API allows you to programmatically create orders, manage drivers, and track deliveries. The API follows RESTful principles and returns JSON responses.</p>
+                    
+                    <div class="info-box">
+                        <strong>Base URLs:</strong><br>
+                        <strong>Production:</strong> https://api.deliveryos.com/api/valkyrie/v1<br>
+                        <strong>Sandbox:</strong> http://localhost:5001/api/valkyrie/v1
+                    </div>
+
+                    <h3>Sandbox vs Production</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                        <div class="info-box">
+                            <strong>Sandbox</strong>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Free to use</li>
+                                <li>Mock drivers and data</li>
+                                <li>Rate limited (100 requests/hour)</li>
+                                <li>Auto-expires after 90 days</li>
+                            </ul>
+                        </div>
+                        <div class="info-box">
+                            <strong>Production</strong>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Requires approval</li>
+                                <li>Real drivers and deliveries</li>
+                                <li>Higher rate limits</li>
+                                <li>Billing enabled</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="auth" class="docs-content">
+                    <h3>Authentication</h3>
+                    <p>All API requests require authentication using an API key. Include your API key in the Authorization header as a Bearer token.</p>
+                    
+                    <div class="code-block">Authorization: Bearer sk_test_your_api_key_here
+
+# Example with cURL
+curl -X GET "http://localhost:5001/api/valkyrie/v1/orders" \\
+  -H "Authorization: Bearer sk_test_your_api_key_here"</div>
+
+                    <h3>API Key Format</h3>
+                    <p><strong>Sandbox keys:</strong> Start with <code>sk_test_</code></p>
+                    <p><strong>Production keys:</strong> Start with <code>sk_live_</code></p>
+                </div>
+
+                <div id="orders" class="docs-content">
+                    <h3>Create Order</h3>
+                    <p><strong>POST</strong> <code>/orders</code></p>
+                    
+                    <div class="code-block">POST http://localhost:5001/api/valkyrie/v1/orders
+Content-Type: application/json
+Authorization: Bearer sk_test_your_api_key
+
+{
+  "customerName": "John Doe",
+  "customerPhone": "+254700000000",
+  "deliveryAddress": "123 Main Street, Nairobi",
+  "items": [
+    {
+      "name": "Product Name",
+      "quantity": 2,
+      "price": 500
+    }
+  ],
+  "notes": "Handle with care"
+}</div>
+
+                    <h3>Get Order Status</h3>
+                    <p><strong>GET</strong> <code>/orders/:orderId</code></p>
+                    
+                    <div class="code-block">GET http://localhost:5001/api/valkyrie/v1/orders/123
+Authorization: Bearer sk_test_your_api_key</div>
+                </div>
+
+                <div id="riders" class="docs-content">
+                    <h3>Riders (Drivers)</h3>
+                    <p>The Valkyrie API provides access to riders (drivers) for order fulfillment. Riders can be assigned to orders and tracked in real-time.</p>
+                    
+                    <h3>Get Available Riders</h3>
+                    <p><strong>GET</strong> <code>/riders</code></p>
+                    <p>Retrieve a list of available riders for your partner account.</p>
+                    
+                    <div class="code-block">GET http://localhost:5001/api/valkyrie/v1/riders
+Authorization: Bearer sk_test_your_api_key</div>
+                    
+                    <h3>Response Format</h3>
+                    <div class="code-block">{
+  "success": true,
+  "riders": [
+    {
+      "id": 1,
+      "name": "John Driver",
+      "phoneNumber": "+254700000000",
+      "status": "active",
+      "vehicleType": "motorcycle"
+    }
+  ]
+}</div>
+                    
+                    <h3>Rider Status</h3>
+                    <p>Riders can have the following statuses:</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-gray); line-height: 1.8;">
+                        <li><strong>active</strong> - Available for new orders</li>
+                        <li><strong>on_delivery</strong> - Currently delivering an order</li>
+                        <li><strong>offline</strong> - Not available</li>
+                    </ul>
+                    
+                    <h3>Assign Rider to Order</h3>
+                    <p>Riders are automatically assigned to orders based on availability and location. You can also manually assign a rider when creating an order.</p>
+                    
+                    <div class="info-box">
+                        <strong>Note:</strong> In sandbox mode, riders are mock/test data. Production mode uses real riders from the DeliveryOS network.
+                    </div>
+                </div>
+
+                <div id="errors" class="docs-content">
+                    <h3>Error Handling</h3>
+                    <p>The API uses standard HTTP status codes. Errors are returned in JSON format.</p>
+                    
+                    <h3>Error Response Format</h3>
+                    <div class="code-block">{
+  "error": "Bad Request",
+  "message": "Invalid delivery address",
+  "code": "INVALID_ADDRESS"
+}</div>
+
+                    <h3>Status Codes</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <p><strong>200</strong> - Success</p>
+                            <p><strong>201</strong> - Created</p>
+                            <p><strong>400</strong> - Bad Request</p>
+                            <p><strong>401</strong> - Unauthorized</p>
+                        </div>
+                        <div>
+                            <p><strong>403</strong> - Forbidden</p>
+                            <p><strong>404</strong> - Not Found</p>
+                            <p><strong>429</strong> - Rate Limited</p>
+                            <p><strong>500</strong> - Server Error</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-heading">Our Work</h4>
+                    <ul class="footer-links">
+                        <li><a href="products.html#dial-a-drink-kenya">Dial a Drink Kenya</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>Email: sales@thewolfgang.tech</li>
+                        <li>Phone: +254712674333</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Wolfgang. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs and content
+            document.querySelectorAll('.docs-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.docs-content').forEach(content => content.classList.remove('active'));
+            
+            // Show selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
+</body>
+</html>
+

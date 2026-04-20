@@ -13,10 +13,10 @@ app.use(express.static(path.join(__dirname)));
 // Email endpoint (matching Netlify function path)
 app.post('/.netlify/functions/send-email', async (req, res) => {
   try {
-    const { name, company, topic, message, recaptcha } = req.body;
+    const { name, company, message, recaptcha } = req.body;
 
     // Validate required fields
-    if (!name || !company || !topic || !message) {
+    if (!name || !company || !message) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -81,7 +81,7 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
     }
 
     // Email subject
-    const subject = `New Contact Form Submission - ${topic}`;
+    const subject = 'New Contact Form Submission';
 
     // HTML email body
     const htmlBody = `
@@ -110,9 +110,6 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
               <span class="label">Company:</span> ${company}
             </div>
             <div class="field">
-              <span class="label">Topic:</span> ${topic}
-            </div>
-            <div class="field">
               <span class="label">Message:</span>
               <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
             </div>
@@ -123,7 +120,7 @@ app.post('/.netlify/functions/send-email', async (req, res) => {
     `;
 
     // Plain text version
-    const textBody = `New contact form submission from Wolfgang website:\n\nName: ${name}\nCompany: ${company}\nTopic: ${topic}\nMessage:\n${message}`;
+    const textBody = `New contact form submission from Wolfgang website:\n\nName: ${name}\nCompany: ${company}\nMessage:\n${message}`;
 
     // Send email
     const info = await transporter.sendMail({
@@ -170,9 +167,27 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Serve developers pages
+app.get('/developers.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'developers.html'));
+});
+
+app.get('/developers-sandbox.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'developers-sandbox.html'));
+});
+
+app.get('/developers-sandbox-success.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'developers-sandbox-success.html'));
+});
+
+app.get('/developers-docs.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'developers-docs.html'));
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Wolfgang server running at http://localhost:${PORT}`);
   console.log(`📧 Email endpoint: http://localhost:${PORT}/.netlify/functions/send-email`);
+  console.log(`🌐 Developers portal: http://localhost:${PORT}/developers.html`);
 });
 

@@ -12,10 +12,10 @@ exports.handler = async (event, context) => {
   try {
     // Parse form data
     const formData = JSON.parse(event.body);
-    const { name, company, topic, message, recaptcha } = formData;
+    const { name, company, message, recaptcha } = formData;
 
     // Validate required fields
-    if (!name || !company || !topic || !message) {
+    if (!name || !company || !message) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'All fields are required' })
@@ -90,7 +90,7 @@ exports.handler = async (event, context) => {
     }
 
     // Email subject
-    const subject = `New Contact Form Submission - ${topic}`;
+    const subject = 'New Contact Form Submission';
 
     // HTML email body
     const htmlBody = `
@@ -119,9 +119,6 @@ exports.handler = async (event, context) => {
               <span class="label">Company:</span> ${company}
             </div>
             <div class="field">
-              <span class="label">Topic:</span> ${topic}
-            </div>
-            <div class="field">
               <span class="label">Message:</span>
               <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
             </div>
@@ -132,7 +129,7 @@ exports.handler = async (event, context) => {
     `;
 
     // Plain text version
-    const textBody = `New contact form submission from Wolfgang website:\n\nName: ${name}\nCompany: ${company}\nTopic: ${topic}\nMessage:\n${message}`;
+    const textBody = `New contact form submission from Wolfgang website:\n\nName: ${name}\nCompany: ${company}\nMessage:\n${message}`;
 
     // Send email
     const info = await transporter.sendMail({
